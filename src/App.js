@@ -3,18 +3,13 @@
   Not all files in the project need code added.
   Look at each file to see what props need to be passed!
 */
-
 // Import the state hook
 import React, {useState} from 'react';
 // Import the Posts (plural!) and SearchBar components, since they are used inside App component
 // Import the dummyData
-import Post from './components/Posts/LikeSection';
 import Posts from './components/Posts/LikeSection';
-import PostHeader from './components/Posts/LikeSection';
-import LikeSection from './components/Posts/LikeSection';
 import SearchBar from './components/SearchBar/SearchBar';
 import dummyData from './dummy-data';
-
 import './App.css';
 
 const App = () => {
@@ -26,6 +21,15 @@ const App = () => {
 
 
   const likePost = postId => {
+    setPostsState(posts.map( post => {
+      if(postId === post.id){
+        post.likes += 1;
+        return {...post};
+      }else{
+        return post
+      }
+    }))
+  };
     /*
       This function serves the purpose of increasing the number of likes by one, of the post with a given id.
 
@@ -37,17 +41,25 @@ const App = () => {
         - if the `id` of the post matches `postId`, return a new post object with the desired values (use the spread operator).
         - otherwise just return the post object unchanged.
      */
-  };
-
-  return (
-    <div className='App'>
-      {/* Add SearchBar and Posts here to render them */}
-      <SearchBar setSearchTerm={setSearchTerm} />
-      <Posts searchTerm={searchTerm}/>
+    
+        const getFilteredSearch = () => {
+    
+          const filteredSearch = posts.filter(post => {
+            // console.log(post);
+            return post.username.toLowerCase().includes(searchTerm.toLowerCase())
+          })
+          return filteredSearch
+        }
       
-      {/* Check the implementation of each component, to see what props they require, if any! */}
-    </div>
-  );
-};
+        return (
+          <div className='App'>
+            <SearchBar setSearchTerm={setSearchTerm} />
+            <Posts searchTerm={searchTerm} posts={getFilteredSearch()} likePost={likePost} />
+            {/* Add SearchBar and Posts here to render them */}
+            {/* Check the implementation of each component, to see what props they require, if any! */}
+          </div>
+        );
+      };
+      
 
 export default App;
