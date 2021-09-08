@@ -54,7 +54,7 @@ const App = () => {
         return (
           <div className='App'>
             <SearchBar setSearchTerm={setSearchTerm} />
-            <Posts searchTerm={searchTerm} posts={getFilteredSearch()} likePost={likePost} />
+            {/* <Posts searchTerm={searchTerm} posts={getFilteredSearch()} likePost={likePost} /> */}
             {/* Add SearchBar and Posts here to render them */}
             {/* Check the implementation of each component, to see what props they require, if any! */}
           </div>
